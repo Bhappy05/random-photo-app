@@ -8,6 +8,7 @@
 import UIKit
 
 class CatsViewController: UIViewController {
+    var session: URLSession = URLSession.shared
     
     // ImageView for photo
     internal let imageView: UIImageView = {
@@ -34,12 +35,10 @@ class CatsViewController: UIViewController {
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
+        getRandomCat()
         
         view.addSubview(button)
         button.frame = CGRect(x: 30, y: view.frame.size.height - 250, width: view.frame.size.width - 60, height: 50)
-        
-        getRandomCat()
-        
         button.addTarget(self, action: #selector(didTapButtonCat), for: .touchUpInside)
     }
     
@@ -56,13 +55,11 @@ class CatsViewController: UIViewController {
         }
         
         // Using URLSession to fetch the data asynchronously
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            // Ensuring there is data and no error
-            guard let data = data, error == nil else {
-                print("Error fetching image: \(String(describing: error))")
-                return
-            }
-            
+        session.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else {
+                    print("Error fetching image: \(String(describing: error))")
+                    return
+                }
             // Updating the UI on the main thread
             DispatchQueue.main.async {
                 self.imageView.image = UIImage(data: data)
