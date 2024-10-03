@@ -104,7 +104,8 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()
-        viewController.didTapButtonPhoto()// Tap button with simulating image load
+        viewController.session = session
+        viewController.didTapButtonPhoto() // Tap button with simulating image load
         
         // Wait for the image download to complete
         try await Task.sleep(nanoseconds: 2_000_000_000)
@@ -160,7 +161,8 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()
-        viewController.didTapButtonCat()// Tap button with simulating image load
+        viewController.session = session
+        viewController.didTapButtonCat() // Tap button with simulating image load
         
         // Wait for the image download to complete
         try await Task.sleep(nanoseconds: 2_000_000_000)
@@ -216,6 +218,7 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()
+        viewController.session = session
         viewController.didTapButtonDog()  // Tap button with simulating image load
         
         // Wait for the image download to complete
