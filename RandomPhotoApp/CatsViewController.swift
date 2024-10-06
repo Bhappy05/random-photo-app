@@ -31,6 +31,7 @@ class CatsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "CatsVCIdentifier"
         view.backgroundColor = .systemMint
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)

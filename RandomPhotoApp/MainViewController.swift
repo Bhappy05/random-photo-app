@@ -52,6 +52,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.accessibilityIdentifier = "MainVCIdentifier"
         colors.shuffle()
         view.backgroundColor = colors.randomElement()
         view.addSubview(imageView)
