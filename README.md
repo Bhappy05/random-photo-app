@@ -1,7 +1,5 @@
-# random-photo-app
+# Random Photo App by Denis Kovalev
 ⚠️ Please Note that this is a live project
-
-Random Photo App by Denis Kovalev
 
 This project serves as a support to test different features regarding Swift, automation and the iOS ecosystem.
 
@@ -12,8 +10,9 @@ Below is the list of features I've planned to add to the project
 - [x] Asynchronous image fetching
 - [x] Unit Testing
 - [x] UI Tests
-- [ ] Bottom sheet with info
+- [x] Bottom sheet with info
+- [x] Deep Links
 - [ ] Error handling
-- [ ] Deep Links
+- [ ] GitHub CI integration
 
 
