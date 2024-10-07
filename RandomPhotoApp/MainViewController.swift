@@ -95,15 +95,49 @@ class ViewController: UIViewController {
         
         // Using URLSession to fetch the data asynchronously
         session.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else {
-                    print("Error fetching image: \(String(describing: error))")
-                    return
+            if let error = error {
+                print("Error fetching image: \(error)")
+                // Show an alert on the main thread
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: "\(error)")
                 }
+                return
+            }
+            
+            // Check if the response status code is not 200
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+                print("Server returned status code: \(httpResponse.statusCode)")
+                // Show an alert on the main thread
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: "HTTP Error: \(httpResponse.statusCode)")
+                }
+                return
+            }
+            guard let data = data else {
+                print("No data returned from the request")
+                // Show an alert on the main thread
+                DispatchQueue.main.async {
+                    self.showErrorAlert(message: "No data received.")
+                }
+                return
+            }
             // Updating the UI on the main thread
             DispatchQueue.main.async {
                 self.imageView.image = UIImage(data: data)
             }
         }.resume() // Starting the task
+    }
+    
+    func showErrorAlert(message: String) {
+        let alertController = UIAlertController(title: "Something went wrong", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        
+        // Find the first active UIWindowScene and its window
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let currentViewController = window.rootViewController {
+            currentViewController.present(alertController, animated: true, completion: nil)
+        }
     }
     
     @objc private func showInfoBottomSheet() {
@@ -121,6 +155,4 @@ class ViewController: UIViewController {
             present(bottomSheetVC, animated: true, completion: nil) // Present the bottom sheet
         }
     }
-
-
 }

@@ -113,7 +113,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         }
     
     func testLaunchPerformance() throws { // This measures how long it takes to launch application.
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
+        if #available(macOS 10.15, iOS 16.0, tvOS 13.0, watchOS 7.0, *) {
             measure(metrics: [XCTApplicationLaunchMetric()]) {
                 XCUIApplication().launch()
             }
