@@ -96,6 +96,7 @@ class DogsViewController: UIViewController {
     func showErrorAlert(message: String) {
         let alertController = UIAlertController(title: "Something went wrong", message: message, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        alertController.view.accessibilityIdentifier = "ErrorAlertIdentifier"
         
         // Find the first active UIWindowScene and its window
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

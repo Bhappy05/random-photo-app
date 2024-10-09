@@ -27,6 +27,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
         }
     }
+    
+    func scene(_ scene: UIScene,  willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: windowScene)
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let initialViewController = storyboard.instantiateInitialViewController() {
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
+        
+        // Check if the app is running in a test environment
+        if ProcessInfo.processInfo.environment["UITestMode"] == "true" {
+            let configuration = URLSessionConfiguration.default
+            configuration.protocolClasses = [MockURLProtocol.self]
+            let session = URLSession(configuration: configuration)
+            
+            // Assigning the session to all controllers
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                for viewController in tabBarController.viewControllers ?? [] {
+                    if let MainVC = viewController as? ViewController {
+                        MainVC.session = session
+                    } else if let CatsVC = viewController as? CatsViewController {
+                        CatsVC.session = session
+                    } else if let DogsVC = viewController as? DogsViewController {
+                        DogsVC.session = session
+                    }
+                }
+                MockURLProtocol.responseData = Data()
+                MockURLProtocol.statusCode = 404
+            }
+            
+        }
+    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

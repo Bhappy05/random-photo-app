@@ -12,24 +12,43 @@ final class RandomPhotoAppUITests: XCTestCase {
     var app: XCUIApplication!
     
     // Properties for common UI elements
-    var tabBar: XCUIElement!
-    var mainVC: XCUIElement!
-    var catsVC: XCUIElement!
-    var dogsVC: XCUIElement!
+    lazy var tabBar: XCUIElement = {
+        return app.tabBars.firstMatch
+    }()
+
+    lazy var mainVC: XCUIElement = {
+        return app.otherElements["MainVCIdentifier"]
+    }()
+
+    lazy var catsVC: XCUIElement = {
+        return app.otherElements["CatsVCIdentifier"]
+    }()
+
+    lazy var dogsVC: XCUIElement = {
+        return app.otherElements["DogsVCIdentifier"]
+    }()
+
+    lazy var buttonAnyPhoto: XCUIElement = {
+        return app.buttons["RandomPhotoButtonIdentifier"]
+    }()
+
+    lazy var buttonCat: XCUIElement = {
+        return app.buttons["RandomCatButtonIdentifier"]
+    }()
+
+    lazy var buttonDog: XCUIElement = {
+        return app.buttons["RandomDogButtonIdentifier"]
+    }()
     
     override func setUpWithError() throws {
+        MockURLProtocol.responseData = nil // Reset mock data
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        
-        // Initialize common UI elements
-        tabBar = app.tabBars.firstMatch
-        mainVC = app.otherElements["MainVCIdentifier"]
-        catsVC = app.otherElements["CatsVCIdentifier"]
-        dogsVC = app.otherElements["DogsVCIdentifier"]
     }
 
     override func tearDownWithError() throws {
+        MockURLProtocol.responseData = nil // Reset mock data
         app = nil
     }
     
@@ -48,6 +67,44 @@ final class RandomPhotoAppUITests: XCTestCase {
         XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
     }
     
+    func testAlerts() {
+        app.launchEnvironment["UITestMode"] = "true" // Set environment variable to indicate the test mode
+        app.launch()
+        let alert = app.alerts["ErrorAlertIdentifier"]
+        let alertLabel = app.staticTexts["Something went wrong"]
+        
+        
+        //
+        // Asserts for MainViewController
+        //
+        
+        buttonAnyPhoto.tap()
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        alert.buttons["OK"].tap()
+        XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
+        tabBar.buttons["Cats"].tap()
+        
+        //
+        // Asserts for CatsViewController
+        //
+        
+        XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        alert.buttons["OK"].tap()
+        tabBar.buttons["Dogs"].tap()
+        
+        //
+        // Asserts for DogsViewController
+        //
+        
+        XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        alert.buttons["OK"].tap()
+    }
+    
     func testFullFlow() { // Integration test for all screens
         let bottomSheet = app.otherElements["BottomSheetIdentifier"]
         
@@ -55,10 +112,6 @@ final class RandomPhotoAppUITests: XCTestCase {
         let catsImageView = app.images["CatsImageViewIdentifier"]
         let dogsImageView = app.images["DogsImageViewIdentifier"]
         
-        
-        let buttonAnyPhoto = app.buttons["RandomPhotoButtonIdentifier"]
-        let buttonCat = app.buttons["RandomCatButtonIdentifier"]
-        let buttonDog = app.buttons["RandomDogButtonIdentifier"]
         let infoButton = app.buttons["InfoButtonIdentifier"]
         
         let mainViewLabel = app.staticTexts["Random Photo"]
