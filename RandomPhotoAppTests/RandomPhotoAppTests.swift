@@ -7,40 +7,15 @@
 
 import XCTest
 @testable import RandomPhotoApp
-
-class MockURLProtocol: URLProtocol {
-    static var testData: Data?
-    
-    override class func canInit(with request: URLRequest) -> Bool {
-        return true // Intercept all requests
-    }
-
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest {
-        return request // We are not modifying the request
-    }
-
-    override func startLoading() {
-        if let data = MockURLProtocol.testData {
-            // Provide the mock data for the response
-            self.client?.urlProtocol(self, didLoad: data)
-        }
-        // Indicate that the loading has finished
-        self.client?.urlProtocolDidFinishLoading(self)
-    }
-
-    override func stopLoading() {
-        // No cleanup required for mock
-    }
-}
     
 final class RandomPhotoAppTests: XCTestCase {
     
     override func setUpWithError() throws {
-        MockURLProtocol.testData = nil // Reset mock data
+        MockURLProtocol.responseData = nil // Reset mock data
     }
     
     override func tearDownWithError() throws { // Clean up resources and reset states
-        MockURLProtocol.testData = nil // Reset mock data
+        MockURLProtocol.responseData = nil // Reset mock data
     }
     
     func testLaunchScreen() {
@@ -100,7 +75,7 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Set mock data for the new image
         let newImage = UIImage(systemName: "star")!
-        MockURLProtocol.testData = newImage.pngData()
+        MockURLProtocol.responseData = newImage.pngData()
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()
@@ -157,7 +132,7 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Set mock data for the new image
         let newImage = UIImage(systemName: "star")!
-        MockURLProtocol.testData = newImage.pngData()
+        MockURLProtocol.responseData = newImage.pngData()
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()
@@ -214,7 +189,7 @@ final class RandomPhotoAppTests: XCTestCase {
         
         // Set mock data for the new image
         let newImage = UIImage(systemName: "star")!
-        MockURLProtocol.testData = newImage.pngData()
+        MockURLProtocol.responseData = newImage.pngData()
         
         // Use the custom session to simulate the image fetch
         let session = makeMockSession()

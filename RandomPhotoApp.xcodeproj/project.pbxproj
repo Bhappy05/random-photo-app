@@ -21,6 +21,8 @@
 		3AB686A42C89B6650021ECA2 /* Launch_Screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */; };
 		3AD2D4302C88FAC0008D2A8F /* Cats.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AD2D42E2C88FABF008D2A8F /* Cats.jpg */; };
 		3AD2D4312C88FAC0008D2A8F /* Dogs.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AD2D42F2C88FABF008D2A8F /* Dogs.jpg */; };
+		3AF5C3C22CB6953300FE6AF6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */; };
+		3AF5C3C32CB6956700FE6AF6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,7 @@
 		3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Launch_Screen.jpg; path = ../../../Launch_Screen.jpg; sourceTree = "<group>"; };
 		3AD2D42E2C88FABF008D2A8F /* Cats.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cats.jpg; path = ../../../Cats.jpg; sourceTree = "<group>"; };
 		3AD2D42F2C88FABF008D2A8F /* Dogs.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Dogs.jpg; path = ../../../Dogs.jpg; sourceTree = "<group>"; };
+		3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,7 @@
 				3AA17EE82C7B5C2D00E9D825 /* Assets.xcassets */,
 				3AA17EEA2C7B5C2D00E9D825 /* LaunchScreen.storyboard */,
 				3AA17EED2C7B5C2D00E9D825 /* Info.plist */,
+				3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */,
 			);
 			path = RandomPhotoApp;
 			sourceTree = "<group>";
@@ -286,6 +290,7 @@
 				3AA17EE42C7B5C2900E9D825 /* MainViewController.swift in Sources */,
 				3A2D52812C88CA1D00210ADC /* CatsViewController.swift in Sources */,
 				3A2D527F2C88C91D00210ADC /* DogsViewController.swift in Sources */,
+				3AF5C3C22CB6953300FE6AF6 /* MockURLProtocol.swift in Sources */,
 				3AA17EE02C7B5C2900E9D825 /* AppDelegate.swift in Sources */,
 				3AA17EE22C7B5C2900E9D825 /* SceneDelegate.swift in Sources */,
 			);
@@ -304,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AA17F012C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift in Sources */,
+				3AF5C3C32CB6956700FE6AF6 /* MockURLProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
