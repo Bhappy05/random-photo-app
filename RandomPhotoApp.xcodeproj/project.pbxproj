@@ -19,8 +19,8 @@
 		3AA17EF72C7B5C2D00E9D825 /* RandomPhotoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA17EF62C7B5C2D00E9D825 /* RandomPhotoAppTests.swift */; };
 		3AA17F012C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA17F002C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift */; };
 		3AB686A42C89B6650021ECA2 /* Launch_Screen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */; };
-		3AD2D4302C88FAC0008D2A8F /* Cats.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AD2D42E2C88FABF008D2A8F /* Cats.jpg */; };
-		3AD2D4312C88FAC0008D2A8F /* Dogs.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AD2D42F2C88FABF008D2A8F /* Dogs.jpg */; };
+		3AC4C1082CB8202900EDF046 /* Cats.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AC4C1072CB8202900EDF046 /* Cats.jpg */; };
+		3AC4C10A2CB8203500EDF046 /* Dogs.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3AC4C1092CB8203500EDF046 /* Dogs.jpg */; };
 		3AF5C3C22CB6953300FE6AF6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */; };
 		3AF5C3C32CB6956700FE6AF6 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */; };
 /* End PBXBuildFile section */
@@ -57,9 +57,9 @@
 		3AA17EF62C7B5C2D00E9D825 /* RandomPhotoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPhotoAppTests.swift; sourceTree = "<group>"; };
 		3AA17EFC2C7B5C2D00E9D825 /* RandomPhotoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RandomPhotoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AA17F002C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPhotoAppUITests.swift; sourceTree = "<group>"; };
-		3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Launch_Screen.jpg; path = ../../../Launch_Screen.jpg; sourceTree = "<group>"; };
-		3AD2D42E2C88FABF008D2A8F /* Cats.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Cats.jpg; path = ../../../Cats.jpg; sourceTree = "<group>"; };
-		3AD2D42F2C88FABF008D2A8F /* Dogs.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Dogs.jpg; path = ../../../Dogs.jpg; sourceTree = "<group>"; };
+		3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Launch_Screen.jpg; sourceTree = "<group>"; };
+		3AC4C1072CB8202900EDF046 /* Cats.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Cats.jpg; sourceTree = "<group>"; };
+		3AC4C1092CB8203500EDF046 /* Dogs.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Dogs.jpg; sourceTree = "<group>"; };
 		3AF5C3C12CB6953300FE6AF6 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -145,8 +145,8 @@
 		3AD2D42B2C88F239008D2A8F /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				3AD2D42E2C88FABF008D2A8F /* Cats.jpg */,
-				3AD2D42F2C88FABF008D2A8F /* Dogs.jpg */,
+				3AC4C1072CB8202900EDF046 /* Cats.jpg */,
+				3AC4C1092CB8203500EDF046 /* Dogs.jpg */,
 				3AB686A32C89B6650021ECA2 /* Launch_Screen.jpg */,
 			);
 			path = Images;
@@ -258,9 +258,9 @@
 			files = (
 				3AA17EEC2C7B5C2D00E9D825 /* LaunchScreen.storyboard in Resources */,
 				3AA17EE92C7B5C2D00E9D825 /* Assets.xcassets in Resources */,
+				3AC4C10A2CB8203500EDF046 /* Dogs.jpg in Resources */,
+				3AC4C1082CB8202900EDF046 /* Cats.jpg in Resources */,
 				3AB686A42C89B6650021ECA2 /* Launch_Screen.jpg in Resources */,
-				3AD2D4312C88FAC0008D2A8F /* Dogs.jpg in Resources */,
-				3AD2D4302C88FAC0008D2A8F /* Cats.jpg in Resources */,
 				3AA17EE72C7B5C2A00E9D825 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
