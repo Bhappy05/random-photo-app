@@ -36,6 +36,7 @@ class CatsViewController: UIViewController {
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
+        startLoader()
         getRandomCat()
         
         view.addSubview(button)
@@ -43,8 +44,14 @@ class CatsViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapButtonCat), for: .touchUpInside)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupLoader(in: imageView) // Setup the loader whenever the view appears
+    }
+    
     // Function to handle the tap on button
     @objc func didTapButtonCat() {
+        startLoader()
         getRandomCat()
     }
     
@@ -61,6 +68,7 @@ class CatsViewController: UIViewController {
                 print("Error fetching image: \(error)")
                 // Show an alert on the main thread
                 DispatchQueue.main.async {
+                    stopLoader()
                     self.showErrorAlert(message: "\(error)")
                 }
                 return
@@ -71,6 +79,7 @@ class CatsViewController: UIViewController {
                 print("Server returned status code: \(httpResponse.statusCode)")
                 // Show an alert on the main thread
                 DispatchQueue.main.async {
+                    stopLoader()
                     self.showErrorAlert(message: "HTTP Error: \(httpResponse.statusCode)")
                 }
                 return
@@ -79,12 +88,14 @@ class CatsViewController: UIViewController {
                 print("No data returned from the request")
                 // Show an alert on the main thread
                 DispatchQueue.main.async {
+                    stopLoader()
                     self.showErrorAlert(message: "No data received.")
                 }
                 return
             }
             // Updating the UI on the main thread
             DispatchQueue.main.async {
+                stopLoader()
                 self.imageView.image = UIImage(data: data)
             }
         }.resume() // Starting the task
