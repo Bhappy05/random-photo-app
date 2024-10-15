@@ -21,19 +21,28 @@ Below is the list of features I've planned to add to the project
 
 ## Screenshots and video
 ### Launch Screen
-![LaunchScreen](https://github.com/user-attachments/assets/22ab162a-d165-483e-ac5f-4a7b67c65b0b)
+![LaunchScreen](https://github.com/user-attachments/assets/b1406302-b2ff-432f-b53b-5f03752f0d8d)
 
 ### Main View Controller
-![MainVC](https://github.com/user-attachments/assets/3644d55f-ce22-4883-933d-1ebb54e87d15)
+![MainVC](https://github.com/user-attachments/assets/3378dbcd-289b-49e7-b7d6-5571c5c55be6)
 
 ### Cats View Controller
-![CatsVC](https://github.com/user-attachments/assets/c19038a7-f35a-49dc-9351-fb148dfaa20d)
+![CatsVC](https://github.com/user-attachments/assets/1199d53d-a0ae-4a1a-958f-5a3846fb2961)
 
 ### Dogs View Controller
-![DogsVC](https://github.com/user-attachments/assets/fdbc2b31-32af-4961-9b81-bdac071e1070)
+![DogsVC](https://github.com/user-attachments/assets/3f184480-ee5c-46ce-9740-7638299c88fb)
 
 ### Bottom Sheet with info
-![BottomSheet](https://github.com/user-attachments/assets/1b98b1fa-12f9-452b-9566-1ce646ff6f3c)
+![BottomSheet](https://github.com/user-attachments/assets/e3574e80-d07d-4336-81a6-3900c2af27cc)
+
+### Error handling with alert
+![Alert](https://github.com/user-attachments/assets/9e3584f1-baab-4953-b96e-145898079787)
+
+### UI tests
+![UITestsNavigator](https://github.com/user-attachments/assets/df9a7833-6ecc-4bd3-92d0-530391580208)
+
+### Unit tests
+![UnitTestsNavigator](https://github.com/user-attachments/assets/91928ff1-6757-4e30-8cc5-53bfbb9ccac8)
 
 ### DeepLink
 https://github.com/user-attachments/assets/c13fa4aa-9b82-4495-bdbd-df40f51e3bd1
