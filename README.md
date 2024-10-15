@@ -21,22 +21,22 @@ Below is the list of features I've planned to add to the project
 
 ## Screenshots and video
 ### Launch Screen
-![LaunchScreen](https://github.com/user-attachments/assets/d6cc6189-a805-4314-b3b8-53fbcd829ed3)
+![LaunchScreen](https://github.com/user-attachments/assets/22ab162a-d165-483e-ac5f-4a7b67c65b0b)
 
 ### Main View Controller
-![MainVC](https://github.com/user-attachments/assets/215962c3-a53b-4f6f-8d19-bb400e23b2b1)
+![MainVC](https://github.com/user-attachments/assets/3644d55f-ce22-4883-933d-1ebb54e87d15)
 
 ### Cats View Controller
-![CatsVC](https://github.com/user-attachments/assets/4282533f-dd9b-4a0f-a3a7-47fb58c14408)
+![CatsVC](https://github.com/user-attachments/assets/c19038a7-f35a-49dc-9351-fb148dfaa20d)
 
 ### Dogs View Controller
-![DogsVC](https://github.com/user-attachments/assets/25afcf49-bf47-4d51-a6a5-6ef379cc1982)
+![DogsVC](https://github.com/user-attachments/assets/fdbc2b31-32af-4961-9b81-bdac071e1070)
 
 ### Bottom Sheet with info
-![BottomSheet](https://github.com/user-attachments/assets/16a3f5ae-8e4b-4e9a-89a9-f6a44279b9db)
+![BottomSheet](https://github.com/user-attachments/assets/1b98b1fa-12f9-452b-9566-1ce646ff6f3c)
 
 ### DeepLink
-![DeepLink](https://github.com/user-attachments/assets/c13fa4aa-9b82-4495-bdbd-df40f51e3bd1)
+https://github.com/user-attachments/assets/c13fa4aa-9b82-4495-bdbd-df40f51e3bd1
 
 
 
