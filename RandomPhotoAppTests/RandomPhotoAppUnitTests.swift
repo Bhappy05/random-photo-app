@@ -8,7 +8,7 @@
 import XCTest
 @testable import RandomPhotoApp
     
-final class RandomPhotoAppTests: XCTestCase {
+final class RandomPhotoAppUnitTests: XCTestCase {
     
     override func setUpWithError() throws {
         MockURLProtocol.responseData = nil // Reset mock data

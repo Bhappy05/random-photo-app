@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "1C2E00B2-4A84-446D-826A-D85067CF0809",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:RandomPhotoApp.xcodeproj",
+        "identifier" : "3AA17EFB2C7B5C2D00E9D825",
+        "name" : "RandomPhotoAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
