@@ -15,17 +15,11 @@ var imageLoader: UIActivityIndicatorView = {
     imageLoader.color = .white
     imageLoader.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
     imageLoader.translatesAutoresizingMaskIntoConstraints = false
+    imageLoader.accessibilityTraits = .notEnabled
     return imageLoader
 }()
 
 func setupLoader(in imageView: UIImageView) {
-    // Create a new loader instance
-    let loader = UIActivityIndicatorView(style: .large)
-    loader.accessibilityIdentifier = "ImageLoaderIdentifier"
-    loader.color = .white
-    loader.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-    loader.translatesAutoresizingMaskIntoConstraints = false
-    
     // Adding the loader as a subview of imageView
     imageView.addSubview(imageLoader)
     
@@ -40,10 +34,12 @@ func setupLoader(in imageView: UIImageView) {
 func startLoader() {
     imageLoader.startAnimating()
     imageLoader.isHidden = false
+    imageLoader.accessibilityTraits = []
 }
 
 // Actions to stop the loader
 func stopLoader() {
     imageLoader.stopAnimating()
     imageLoader.isHidden = true
+    imageLoader.accessibilityTraits = .notEnabled
 }

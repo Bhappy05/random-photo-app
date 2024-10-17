@@ -58,9 +58,8 @@ class ViewController: UIViewController {
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
-        startLoader()
         getRandomPhoto()
-        
+
         view.addSubview(button)
         button.frame = CGRect(x: 30, y: view.frame.size.height - 250, width: view.frame.size.width - 60, height: 50)
         button.addTarget(self, action: #selector(didTapButtonPhoto), for: .touchUpInside)
@@ -77,25 +76,25 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLoader(in: imageView) // Setup the loader whenever the view appears
+        setupLoader(in: imageView)
     }
     
     // Function to handle the tap on button and change the background color
     @objc func didTapButtonPhoto() {
-        startLoader()
         // Check if currentColorIndex reaches the end, then reset
         if currentColorIndex >= colors.count {
             colors.shuffle() //
             currentColorIndex = 0 
         }
+        getRandomPhoto()
         view.backgroundColor = colors[currentColorIndex] // Change background color
         currentColorIndex += 1 // Move to the next color
-        getRandomPhoto()
     }
     
     // Asynch function for fetching new photo
     func getRandomPhoto() {
         let urlString = "https://picsum.photos/300"
+        startLoader()
         guard let url = URL(string: urlString) else {
             return
         }
@@ -135,6 +134,7 @@ class ViewController: UIViewController {
             DispatchQueue.main.async {
                 stopLoader()
                 self.imageView.image = UIImage(data: data)
+                self.imageView.accessibilityLabel = "ImageLoaded"
             }
         }.resume() // Starting the task
     }

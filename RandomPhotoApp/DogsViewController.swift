@@ -36,7 +36,6 @@ class DogsViewController: UIViewController {
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
-        startLoader()
         getRandomDog()
         
         view.addSubview(button)
@@ -51,7 +50,6 @@ class DogsViewController: UIViewController {
     
     // Function to handle the tap on button
     @objc func didTapButtonDog() {
-        startLoader()
         getRandomDog()
     }
     
@@ -60,6 +58,7 @@ class DogsViewController: UIViewController {
         // In this case i have made randomizer for different Id's of dogs
         let randomId = Int.random(in: 1...238)
         let urlString = "https://placedog.net/300/300?id=\(randomId)"
+        startLoader()
         guard let url = URL(string: urlString) else {
             return
         }
@@ -99,6 +98,7 @@ class DogsViewController: UIViewController {
             DispatchQueue.main.async {
                 stopLoader()
                 self.imageView.image = UIImage(data: data)
+                self.imageView.accessibilityLabel = "ImageLoaded"
             }
         }.resume() // Starting the task
     }

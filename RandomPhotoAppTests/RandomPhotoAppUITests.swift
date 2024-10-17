@@ -27,6 +27,18 @@ final class RandomPhotoAppUITests: XCTestCase {
     lazy var dogsVC: XCUIElement = {
         return app.otherElements["DogsVCIdentifier"]
     }()
+    
+    lazy var mainImageView: XCUIElement = {
+        return app.images["MainImageViewIdentifier"]
+    }()
+    
+    lazy var catsImageView: XCUIElement = {
+        return app.images["CatsImageViewIdentifier"]
+    }()
+    
+    lazy var dogsImageView: XCUIElement = {
+        return app.images["DogsImageViewIdentifier"]
+    }()
 
     lazy var buttonAnyPhoto: XCUIElement = {
         return app.buttons["RandomPhotoButtonIdentifier"]
@@ -38,6 +50,10 @@ final class RandomPhotoAppUITests: XCTestCase {
 
     lazy var buttonDog: XCUIElement = {
         return app.buttons["RandomDogButtonIdentifier"]
+    }()
+    
+    lazy var imageLoader: XCUIElement = {
+        return app.activityIndicators["ImageLoaderIdentifier"]
     }()
     
     override func setUpWithError() throws {
@@ -108,10 +124,6 @@ final class RandomPhotoAppUITests: XCTestCase {
     func testFullFlow() { // Integration test for all screens
         let bottomSheet = app.otherElements["BottomSheetIdentifier"]
         
-        let mainImageView = app.images["MainImageViewIdentifier"]
-        let catsImageView = app.images["CatsImageViewIdentifier"]
-        let dogsImageView = app.images["DogsImageViewIdentifier"]
-        
         let infoButton = app.buttons["InfoButtonIdentifier"]
         
         let mainViewLabel = app.staticTexts["Random Photo"]
@@ -141,9 +153,9 @@ final class RandomPhotoAppUITests: XCTestCase {
         //
         
         XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
-        XCTAssertEqual(catsViewLabel.label, "Random Cat Photo", "The title label should display 'Random Photo'.")
+        XCTAssertEqual(catsViewLabel.label, "Random Cat Photo", "The title label should display 'Random Cat Photo'.")
         XCTAssertEqual(buttonCat.label, "New Random Cat", "The name of the button 'New Random Cat' is incorrect")
-        XCTAssertTrue(catsImageView.exists, "Main image view does not exists")
+        XCTAssertTrue(catsImageView.exists, "Cats image view does not exists")
         
         tabBar.buttons["Dogs"].tap()
         
@@ -152,9 +164,9 @@ final class RandomPhotoAppUITests: XCTestCase {
         //
         
         XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
-        XCTAssertEqual(dogsViewLabel.label, "Random Dog Photo", "The title label should display 'Random Photo'.")
+        XCTAssertEqual(dogsViewLabel.label, "Random Dog Photo", "The title label should display 'Random Dog Photo'.")
         XCTAssertEqual(buttonDog.label, "New Random Dog", "The name of the button 'New Random Dog' is incorrect")
-        XCTAssertTrue(dogsImageView.exists, "Main image view does not exists")
+        XCTAssertTrue(dogsImageView.exists, "Dogs image view does not exists")
         
         tabBar.buttons["Any Photo"].tap()
         XCTAssertTrue(mainVC.waitForExistence(timeout: 5), "Main VC did not appear") // Assert to make sure that we are on the main VC
@@ -171,5 +183,33 @@ final class RandomPhotoAppUITests: XCTestCase {
                 XCUIApplication().launch()
             }
         }
+    }
+    
+    func testLoaders() {
+        let predicate = NSPredicate(format: "label == 'ImageLoaded'")
+        let mainViewExpectation = XCTNSPredicateExpectation(predicate: predicate, object: mainImageView)
+        let catsViewExpectation = XCTNSPredicateExpectation(predicate: predicate, object: catsImageView)
+        let dogsViewExpectation = XCTNSPredicateExpectation(predicate: predicate, object: dogsImageView)
+        
+        XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
+        XCTAssertTrue(imageLoader.isHittable, "Loader did not appear")
+        
+        var result = XCTWaiter().wait(for: [mainViewExpectation], timeout: 15)
+        XCTAssertEqual(result, .completed, "Image did not load in time")
+        XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
+        tabBar.buttons["Cats"].tap()
+        
+        XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
+        XCTAssertTrue(imageLoader.waitForExistence(timeout: 3), "Loader did not appear")
+        result = XCTWaiter().wait(for: [catsViewExpectation], timeout: 15)
+        XCTAssertEqual(result, .completed, "Image did not load in time")
+        XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
+        tabBar.buttons["Dogs"].tap()
+        
+        XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
+        XCTAssertTrue(imageLoader.waitForExistence(timeout: 3), "Loader did not appear")
+        result = XCTWaiter().wait(for: [dogsViewExpectation], timeout: 15)
+        XCTAssertEqual(result, .completed, "Image did not load in time")
+        XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
     }
 }

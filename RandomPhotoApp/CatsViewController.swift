@@ -36,7 +36,6 @@ class CatsViewController: UIViewController {
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
         imageView.center = view.center
-        startLoader()
         getRandomCat()
         
         view.addSubview(button)
@@ -46,18 +45,17 @@ class CatsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLoader(in: imageView) // Setup the loader whenever the view appears
+        setupLoader(in: imageView) // Start the loader whenever the view appears
     }
-    
     // Function to handle the tap on button
     @objc func didTapButtonCat() {
-        startLoader()
         getRandomCat()
     }
     
     // Asynch function for fetching new cat photo
     func getRandomCat() {
         let urlString = "https://cataas.com/cat?width=300&height=300"
+        startLoader()
         guard let url = URL(string: urlString) else {
             return
         }
@@ -97,6 +95,7 @@ class CatsViewController: UIViewController {
             DispatchQueue.main.async {
                 stopLoader()
                 self.imageView.image = UIImage(data: data)
+                self.imageView.accessibilityLabel = "ImageLoaded"
             }
         }.resume() // Starting the task
     }
