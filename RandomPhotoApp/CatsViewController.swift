@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class CatsViewController: UIViewController {
     var session: URLSession = URLSession.shared
@@ -14,7 +15,7 @@ class CatsViewController: UIViewController {
     internal let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .systemMint
         imageView.accessibilityIdentifier = "CatsImageViewIdentifier"
         return imageView
     }()
@@ -28,19 +29,32 @@ class CatsViewController: UIViewController {
         button.accessibilityIdentifier = "RandomCatButtonIdentifier"
         return button
     }()
-
+    
+    private let saveButton: UIButton = {
+        let saveButton = UIButton()
+        saveButton.backgroundColor = .systemMint
+        saveButton.setTitle("Save Photo", for: .normal)
+        saveButton.setTitleColor(.black, for: .normal)
+        saveButton.accessibilityIdentifier = "SaveButtonIdentifier"
+        return saveButton
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "CatsVCIdentifier"
         view.backgroundColor = .systemMint
         view.addSubview(imageView)
-        imageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
+        imageView.frame = CGRect(x: 0, y: 0, width: 380, height: 350)
         imageView.center = view.center
         getRandomCat()
         
         view.addSubview(button)
-        button.frame = CGRect(x: 30, y: view.frame.size.height - 250, width: view.frame.size.width - 60, height: 50)
+        button.frame = CGRect(x: 55, y: view.frame.size.height - 210, width: view.frame.size.width - 110, height: 40)
         button.addTarget(self, action: #selector(didTapButtonCat), for: .touchUpInside)
+        
+        view.addSubview(saveButton)
+        saveButton.frame = CGRect(x: 55, y: view.frame.size.height - 150, width: view.frame.size.width - 110, height: 40)
+        saveButton.addTarget(self, action: #selector(didTapButtonSavePhoto), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +68,7 @@ class CatsViewController: UIViewController {
     
     // Asynch function for fetching new cat photo
     func getRandomCat() {
-        let urlString = "https://cataas.com/cat?width=300&height=300"
+        let urlString = "https://cataas.com/cat?width=1024&height=1024"
         startLoader()
         guard let url = URL(string: urlString) else {
             return
@@ -110,6 +124,79 @@ class CatsViewController: UIViewController {
            let window = windowScene.windows.first,
            let currentViewController = window.rootViewController {
             currentViewController.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func saveImageToLibrary(image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveError), nil)
+    }
+    
+    @objc func saveError(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            DispatchQueue.main.async {
+                self.showToast(message: "Something went wrong, image not saved")
+            }
+            print("Error saving image: \(error.localizedDescription)")
+        } else {
+            // Image saved successfully
+            DispatchQueue.main.async {
+                self.showToast(message: "Image saved succesfully", duration: 1)
+            }
+            print("Image saved successfully!")
+        }
+    }
+    
+    func checkPhotoLibraryPermission(image: UIImage) {
+        let status = PHPhotoLibrary.authorizationStatus()
+        switch status {
+        case .authorized, .limited:
+            // Access granted, proceed with saving
+            saveImageToLibrary(image: image)
+            break
+        case .denied, .restricted:
+            DispatchQueue.main.async {
+                self.showToast(message: "Error: Please allow access to the photo library in settings.") // Access denied, show a toast explaining the need for permission
+            }
+            break
+        case .notDetermined:
+            // Request permission
+            PHPhotoLibrary.requestAuthorization { newStatus in
+                DispatchQueue.main.async {
+                    if newStatus == .authorized || newStatus == .limited {
+                        // Access granted, proceed with saving
+                        self.saveImageToLibrary(image: image)
+                    } else {
+                        // Access denied, show a message to the user
+                        self.showToast(message: "Error. Please allow access to the photo library in settings.")
+                    }
+                }
+            }
+        @unknown default:
+            DispatchQueue.main.async {
+                self.showToast(message: "Error: Please allow access to the photo library in settings.")
+            }
+        }
+    }
+    
+    @objc func didTapButtonSavePhoto() {
+        if let image = imageView.image {
+            // If there's an image in the imageView, check permission and save
+            checkPhotoLibraryPermission(image: image)
+        } else {
+            // Show a toast message if no image is available for download
+            DispatchQueue.main.async {
+                self.showToast(message: "Error: No photo available for download")
+            }
+        }
+    }
+    
+    func showToast(message: String, duration: Double = 2.0) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "ToastIdentifier"
+        self.present(alert, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            alert.dismiss(animated: true, completion: nil)
         }
     }
 }

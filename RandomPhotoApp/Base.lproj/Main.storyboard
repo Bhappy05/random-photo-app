@@ -30,7 +30,8 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <accessibility key="accessibilityConfiguration" identifier="MainScreenAccId" label="MainScreenAccId">
                             <bool key="isElement" value="YES"/>
                         </accessibility>
@@ -40,7 +41,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Any Photo" image="photo.artframe" catalog="system" id="ZPf-De-LcE"/>
-                    <navigationItem key="navigationItem" title="Random Photo " id="IZ6-VK-Fez"/>
+                    <navigationItem key="navigationItem" title="Random Photo " id="IZ6-VK-Fez" userLabel="Random Photo"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -82,7 +83,6 @@
                                 <rect key="frame" x="20" y="99" width="275" height="40"/>
                                 <accessibility key="accessibilityConfiguration" identifier="Random Cat Photo"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="cKZ-18-Exx"/>
                                     <constraint firstAttribute="width" constant="275" id="fP6-cf-Ske"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
@@ -93,9 +93,9 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jK2-8c-Cjf"/>
-                        <color key="backgroundColor" systemColor="systemRedColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="jK2-8c-Cjf" firstAttribute="trailing" secondItem="ZrM-Sv-S6r" secondAttribute="trailing" constant="98" id="Ica-iB-h3j"/>
                             <constraint firstItem="ZrM-Sv-S6r" firstAttribute="leading" secondItem="jK2-8c-Cjf" secondAttribute="leading" constant="20" id="dvc-i3-xNU"/>
                             <constraint firstItem="ZrM-Sv-S6r" firstAttribute="top" secondItem="jK2-8c-Cjf" secondAttribute="top" constant="40" id="iWo-PH-KOL"/>
                         </constraints>
@@ -132,7 +132,8 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="zJ1-0W-osQ"/>
-                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="uRH-FT-cfR" firstAttribute="top" secondItem="zJ1-0W-osQ" secondAttribute="top" constant="40" id="wNa-Fc-zZH"/>
                             <constraint firstItem="uRH-FT-cfR" firstAttribute="leading" secondItem="zJ1-0W-osQ" secondAttribute="leading" constant="20" id="yOy-f7-Ecd"/>
@@ -183,12 +184,6 @@
         </systemColor>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
