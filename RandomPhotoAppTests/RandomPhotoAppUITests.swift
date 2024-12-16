@@ -52,8 +52,16 @@ final class RandomPhotoAppUITests: XCTestCase {
         return app.buttons["RandomDogButtonIdentifier"]
     }()
     
+    lazy var buttonSaveImage: XCUIElement = {
+        return app.buttons["SaveButtonIdentifier"]
+    }()
+    
     lazy var imageLoader: XCUIElement = {
         return app.activityIndicators["ImageLoaderIdentifier"]
+    }()
+    
+    lazy var toast: XCUIElement = {
+        return app.alerts["ToastIdentifier"]
     }()
     
     override func setUpWithError() throws {
@@ -126,16 +134,17 @@ final class RandomPhotoAppUITests: XCTestCase {
         
         let infoButton = app.buttons["InfoButtonIdentifier"]
         
-        let mainViewLabel = app.staticTexts["Random Photo"]
-        let catsViewLabel = app.staticTexts["Random Cat Photo"]
-        let dogsViewLabel = app.staticTexts["Random Dog Photo"]
-        let infoText = app.staticTexts["I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners."]
+        let mainViewLabel = app.staticTexts["RandomPhotoLabelIdentifier"]
+        let catsViewLabel = app.staticTexts["RandomCatLabelIdentifier"]
+        let dogsViewLabel = app.staticTexts["RandomDogLabelIdentifier"]
+        let infoTextLabel = app.staticTexts["BottomLabelIdentifier"]
         
         //
         // Asserts for MainViewController
         //
         
         XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
+        XCTAssertTrue(mainViewLabel.exists, "The label with identifier 'RandomPhotoLabelIdentifier' should exist.")
         XCTAssertEqual(mainViewLabel.label, "Random Photo", "The title label should display 'Random Photo'.")
         XCTAssertEqual(buttonAnyPhoto.label, "New Random Photo", "The name of the button 'New Random Photo' is incorrect")
         XCTAssertTrue(mainImageView.exists, "Main image view does not exists")
@@ -143,7 +152,8 @@ final class RandomPhotoAppUITests: XCTestCase {
         XCTAssertTrue(infoButton.exists, "Info button does not exist")
         infoButton.tap()
         XCTAssertTrue(bottomSheet.waitForExistence(timeout: 2), "Bottom sheet does not exists")
-        XCTAssertEqual(infoText.label, "I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners.", "Info text is incorrect")
+        XCTAssertTrue(infoTextLabel.exists, "The label with identifier 'BottomLabelIdentifier' should exist.")
+        XCTAssertEqual(infoTextLabel.label, "I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners.", "Info text is incorrect")
         bottomSheet.swipeDown()
         
         tabBar.buttons["Cats"].tap()
@@ -153,6 +163,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         //
         
         XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
+        XCTAssertTrue(catsViewLabel.exists, "The label with identifier 'RandomCatLabelIdentifier' should exist.")
         XCTAssertEqual(catsViewLabel.label, "Random Cat Photo", "The title label should display 'Random Cat Photo'.")
         XCTAssertEqual(buttonCat.label, "New Random Cat", "The name of the button 'New Random Cat' is incorrect")
         XCTAssertTrue(catsImageView.exists, "Cats image view does not exists")
@@ -164,6 +175,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         //
         
         XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
+        XCTAssertTrue(dogsViewLabel.exists, "The label with identifier 'RandomDogLabelIdentifier' should exist.")
         XCTAssertEqual(dogsViewLabel.label, "Random Dog Photo", "The title label should display 'Random Dog Photo'.")
         XCTAssertEqual(buttonDog.label, "New Random Dog", "The name of the button 'New Random Dog' is incorrect")
         XCTAssertTrue(dogsImageView.exists, "Dogs image view does not exists")

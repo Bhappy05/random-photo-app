@@ -11,6 +11,23 @@ import Photos
 class CatsViewController: UIViewController {
     var session: URLSession = URLSession.shared
     
+    private let label: UILabel = {
+        let label = UILabel()
+        label.text = "Random Cat Photo"
+        label.textColor = .systemMint
+        label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "RandomCatLabelIdentifier"
+        
+        // Adding shadow to the text for better visibility
+        label.layer.shadowColor = UIColor.black.cgColor // Shadow color
+        label.layer.shadowOffset = CGSize(width: 2, height: 2) // Shadow offset
+        label.layer.shadowOpacity = 0.7 // Shadow opacity
+        label.layer.shadowRadius = 2.0 // Shadow blur radius
+        return label
+    }()
+    
     // ImageView for photo
     internal let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -47,6 +64,13 @@ class CatsViewController: UIViewController {
         imageView.frame = CGRect(x: 0, y: 0, width: 380, height: 350)
         imageView.center = view.center
         getRandomCat()
+        
+        view.addSubview(label)
+        // Setting constraints to position the label in the top-left corner
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+        ])
         
         view.addSubview(button)
         button.frame = CGRect(x: 55, y: view.frame.size.height - 210, width: view.frame.size.width - 110, height: 40)

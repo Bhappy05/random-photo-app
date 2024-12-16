@@ -11,6 +11,23 @@ import Photos
 class ViewController: UIViewController {
     var session: URLSession = URLSession.shared
     
+    private let label: UILabel = {
+        let label = UILabel()
+        label.text = "Random Photo"
+        label.textColor = .systemMint
+        label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
+        label.textAlignment = .left
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "RandomPhotoLabelIdentifier"
+        
+        // Adding shadow to the text for better visibility
+        label.layer.shadowColor = UIColor.black.cgColor // Shadow color
+        label.layer.shadowOffset = CGSize(width: 2, height: 2) // Shadow offset
+        label.layer.shadowOpacity = 0.7 // Shadow opacity
+        label.layer.shadowRadius = 2.0 // Shadow blur radius
+        return label
+    }()
+    
     // ImageView for photo
     internal let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,6 +50,7 @@ class ViewController: UIViewController {
     private let infoButton: UIButton = {
         let infoButton = UIButton(type: .infoDark)
         infoButton.tintColor = .white
+        infoButton.translatesAutoresizingMaskIntoConstraints = false
         infoButton.accessibilityIdentifier = "InfoButtonIdentifier"
         return infoButton
     }()
@@ -69,6 +87,13 @@ class ViewController: UIViewController {
         imageView.frame = CGRect(x: 0, y: 0, width: 380, height: 350)
         imageView.center = view.center
         getRandomPhoto()
+    
+        view.addSubview(label)
+        // Setting constraints to position the label in the top-left corner
+        NSLayoutConstraint.activate([
+            label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+        ])
         
         view.addSubview(button)
         button.frame = CGRect(x: 55, y: view.frame.size.height - 210, width: view.frame.size.width - 110, height: 40)
@@ -79,10 +104,9 @@ class ViewController: UIViewController {
         saveButton.addTarget(self, action: #selector(didTapButtonSavePhoto), for: .touchUpInside)
         
         view.addSubview(infoButton) // Add the info button to the view
-        infoButton.translatesAutoresizingMaskIntoConstraints = false // Disable auto-resizing mask
         // Set constraints to position the button in the top-right corner
         NSLayoutConstraint.activate([
-            infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 45),
+            infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
             infoButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
         infoButton.addTarget(self, action: #selector(showInfoBottomSheet), for: .touchUpInside)
@@ -171,6 +195,27 @@ class ViewController: UIViewController {
         let bottomSheetVC = storyboard.instantiateViewController(withIdentifier: "InfoBottomSheetVC")  // Instantiate the view controller from storyboard by storyboardID
         
         bottomSheetVC.view.accessibilityIdentifier = "BottomSheetIdentifier"  // Add accessibility identifier to the view of the bottom sheet
+        
+        let bottomLabel = UILabel()
+        bottomLabel.text = "I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners."
+        bottomLabel.textColor = .black
+        bottomLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        bottomLabel.textAlignment = .center
+        bottomLabel.numberOfLines = 0
+        bottomLabel.lineBreakMode = .byWordWrapping
+        bottomLabel.translatesAutoresizingMaskIntoConstraints = false
+        bottomLabel.accessibilityIdentifier = "BottomLabelIdentifier"
+          
+        // Adding the label to the bottomSheetVC's view
+        bottomSheetVC.view.addSubview(bottomLabel)
+          
+        // Setting up Auto Layout constraints to center the label
+        NSLayoutConstraint.activate([
+            bottomLabel.centerXAnchor.constraint(equalTo: bottomSheetVC.view.centerXAnchor),
+            bottomLabel.centerYAnchor.constraint(equalTo: bottomSheetVC.view.centerYAnchor),
+            bottomLabel.leadingAnchor.constraint(equalTo: bottomSheetVC.view.leadingAnchor, constant: 20), // Added some padding
+            bottomLabel.trailingAnchor.constraint(equalTo: bottomSheetVC.view.trailingAnchor, constant: -20) // Added some padding
+        ])
         
         if let sheetPresentation = bottomSheetVC.sheetPresentationController { // Configuring the bottom sheet
             sheetPresentation.detents = [
