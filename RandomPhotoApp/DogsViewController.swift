@@ -44,6 +44,14 @@ class DogsViewController: UIViewController {
         button.setTitle("New Random Dog", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.accessibilityIdentifier = "RandomDogButtonIdentifier"
+        
+        // Rounding corners
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
+          
+        // Dimming when pressed
+        button.configureWithTouchEffects()
+        
         return button
     }()
     
@@ -54,6 +62,14 @@ class DogsViewController: UIViewController {
         saveButton.setTitle("Save Photo", for: .normal)
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.accessibilityIdentifier = "SaveButtonIdentifier"
+        
+        // Rounding corners
+        saveButton.layer.cornerRadius = 15
+        saveButton.clipsToBounds = true
+          
+        // Dimming when pressed
+        saveButton.configureWithTouchEffects()
+        
         return saveButton
     }()
     

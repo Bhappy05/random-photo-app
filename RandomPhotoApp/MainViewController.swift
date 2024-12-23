@@ -44,6 +44,14 @@ class ViewController: UIViewController {
         button.setTitle("New Random Photo", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.accessibilityIdentifier = "RandomPhotoButtonIdentifier"
+        
+        // Rounding corners
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
+          
+        // Dimming when pressed
+        button.configureWithTouchEffects()
+        
         return button
     }()
     
@@ -63,6 +71,14 @@ class ViewController: UIViewController {
         saveButton.setTitle("Save Photo", for: .normal)
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.accessibilityIdentifier = "SaveButtonIdentifier"
+        
+        // Rounding corners
+        saveButton.layer.cornerRadius = 15
+        saveButton.clipsToBounds = true
+          
+        // Dimming when pressed
+        saveButton.configureWithTouchEffects()
+        
         return saveButton
     }()
     // Array of colors for background
@@ -304,5 +320,20 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             alert.dismiss(animated: true, completion: nil)
         }
+    }
+}
+
+extension UIButton {
+    func configureWithTouchEffects() {
+        self.addTarget(self, action: #selector(handleTouchDown), for: .touchDown)
+        self.addTarget(self, action: #selector(handleTouchUp), for: [.touchUpInside, .touchUpOutside, .touchCancel])
+    }
+    
+    @objc private func handleTouchDown() {
+        self.alpha = 0.7 // Dimming when pressing the button
+    }
+    
+    @objc private func handleTouchUp() {
+        self.alpha = 1.0 // Recovering when releasing the button
     }
 }
