@@ -9,7 +9,7 @@ import UIKit
 import Photos
 
 class DogsViewController: UIViewController {
-    var session: URLSession = URLSession.shared
+    var session: URLSession = .shared
     
     private let label: UILabel = {
         let label = UILabel()
@@ -21,10 +21,10 @@ class DogsViewController: UIViewController {
         label.accessibilityIdentifier = "RandomDogLabelIdentifier"
         
         // Adding shadow to the text for better visibility
-        label.layer.shadowColor = UIColor.black.cgColor // Shadow color
-        label.layer.shadowOffset = CGSize(width: 2, height: 2) // Shadow offset
-        label.layer.shadowOpacity = 0.7 // Shadow opacity
-        label.layer.shadowRadius = 2.0 // Shadow blur radius
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.shadowOpacity = 0.7
+        label.layer.shadowRadius = 2.0 
         return label
     }()
     
@@ -47,6 +47,7 @@ class DogsViewController: UIViewController {
         return button
     }()
     
+    // Button to save photo to the library
     private let saveButton: UIButton = {
         let saveButton = UIButton()
         saveButton.backgroundColor = .systemMint
@@ -105,7 +106,7 @@ class DogsViewController: UIViewController {
         session.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching image: \(error)")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if error
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "\(error)")
@@ -116,7 +117,7 @@ class DogsViewController: UIViewController {
             // Check if the response status code is not 200
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
                 print("Server returned status code: \(httpResponse.statusCode)")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if response code is not 200
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "HTTP Error: \(httpResponse.statusCode)")
@@ -125,7 +126,7 @@ class DogsViewController: UIViewController {
             }
             guard let data = data else {
                 print("No data returned from the request")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if there is no photo
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "No data received.")
@@ -147,7 +148,7 @@ class DogsViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         alertController.view.accessibilityIdentifier = "ErrorAlertIdentifier"
         
-        // Find the first active UIWindowScene and its window
+        // Finding the first active UIWindowScene and its window to present alert
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first,
            let currentViewController = window.rootViewController {
@@ -168,7 +169,7 @@ class DogsViewController: UIViewController {
         } else {
             // Image saved successfully
             DispatchQueue.main.async {
-                self.showToast(message: "Image saved succesfully", duration: 1)
+                self.showToast(message: "Image saved succesfully", duration: 1.5)
             }
             print("Image saved successfully!")
         }
@@ -221,6 +222,7 @@ class DogsViewController: UIViewController {
     func showToast(message: String, duration: Double = 2.0) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.view.accessibilityIdentifier = "ToastIdentifier"
+        alert.view.accessibilityLabel = message
         self.present(alert, animated: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {

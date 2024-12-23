@@ -60,6 +60,10 @@ final class RandomPhotoAppUITests: XCTestCase {
         return app.activityIndicators["ImageLoaderIdentifier"]
     }()
     
+    lazy var alert: XCUIElement = {
+        return app.alerts["ErrorAlertIdentifier"]
+    }()
+    
     lazy var toast: XCUIElement = {
         return app.alerts["ToastIdentifier"]
     }()
@@ -92,11 +96,9 @@ final class RandomPhotoAppUITests: XCTestCase {
     }
     
     func testAlerts() {
-        app.launchEnvironment["UITestMode"] = "true" // Set environment variable to indicate the test mode
+        app.terminate()
+        app.launchEnvironment["UITestModeError"] = "true" // Set environment variable to indicate the test mode for mocking image
         app.launch()
-        let alert = app.alerts["ErrorAlertIdentifier"]
-        let alertLabel = app.staticTexts["Something went wrong"]
-        
         
         //
         // Asserts for MainViewController
@@ -104,7 +106,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         
         buttonAnyPhoto.tap()
         XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
-        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        XCTAssertEqual(alert.label, "Something went wrong", "The alert label should display 'Something went wrong'")
         alert.buttons["OK"].tap()
         XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
         tabBar.buttons["Cats"].tap()
@@ -115,7 +117,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         
         XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
         XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
-        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        XCTAssertEqual(alert.label, "Something went wrong", "The alert label should display 'Something went wrong'")
         alert.buttons["OK"].tap()
         tabBar.buttons["Dogs"].tap()
         
@@ -125,7 +127,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         
         XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
         XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
-        XCTAssertEqual(alertLabel.label, "Something went wrong", "The alert label should display 'Something went wrong'")
+        XCTAssertEqual(alert.label, "Something went wrong", "The alert label should display 'Something went wrong'")
         alert.buttons["OK"].tap()
     }
     
@@ -185,7 +187,9 @@ final class RandomPhotoAppUITests: XCTestCase {
     }
     
     func testDeepLinkToMainViewController() throws {
-            app.launchArguments = ["-deeplink", "randomphotoapp://"] // Provide the deep link URL as a launch argument
+            app.launchArguments = ["-deeplink", "randomphotoapp://"] // Provides the deep link URL as a launch argument
+            app.launch() // Launching the app with the provided arguments
+        
             XCTAssertTrue(mainVC.waitForExistence(timeout: 5), "Main View did not appear on deep link") // Wait for the main view to appear
         }
     
@@ -203,12 +207,17 @@ final class RandomPhotoAppUITests: XCTestCase {
         let catsViewExpectation = XCTNSPredicateExpectation(predicate: predicate, object: catsImageView)
         let dogsViewExpectation = XCTNSPredicateExpectation(predicate: predicate, object: dogsImageView)
         
+        app.terminate()
+        app.launchEnvironment["UITestModeSuccess"] = "true" // Setting environment variable to indicate the test mode for mocking image
+        app.launch()
+        
         XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
         XCTAssertTrue(imageLoader.isHittable, "Loader did not appear")
         
         var result = XCTWaiter().wait(for: [mainViewExpectation], timeout: 15)
         XCTAssertEqual(result, .completed, "Image did not load in time")
         XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
+        
         tabBar.buttons["Cats"].tap()
         
         XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
@@ -216,6 +225,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         result = XCTWaiter().wait(for: [catsViewExpectation], timeout: 15)
         XCTAssertEqual(result, .completed, "Image did not load in time")
         XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
+        
         tabBar.buttons["Dogs"].tap()
         
         XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
@@ -223,5 +233,105 @@ final class RandomPhotoAppUITests: XCTestCase {
         result = XCTWaiter().wait(for: [dogsViewExpectation], timeout: 15)
         XCTAssertEqual(result, .completed, "Image did not load in time")
         XCTAssertTrue(imageLoader.accessibilityTraits.isEmpty, "Loader did not disappear after image loaded")
+    }
+    
+    func testImageSavingSuccess() {
+        app.terminate()
+        app.launchEnvironment["UITestModeSuccess"] = "true" // Setting environment variable to indicate the test mode for mocking image
+        app.launch()
+        
+        //
+        // Asserts for MainViewController
+        //
+        
+        XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
+        buttonAnyPhoto.tap()
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast after saving image did not appear")
+        XCTAssertEqual(toast.label, "Image saved succesfully", "Label on the toast should dispaly 'Image saved succesfully'")
+        
+        XCTAssertTrue(tabBar.buttons["Cats"].waitForExistence(timeout: 3), "Tabbar did not appear")
+        tabBar.buttons["Cats"].tap()
+        
+        //
+        // Asserts for CatsViewController
+        //
+        
+        XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast after saving image did not appear")
+        XCTAssertEqual(toast.label, "Image saved succesfully", "Label on the toast should dispaly 'Image saved succesfully'")
+        
+        XCTAssertTrue(tabBar.buttons["Dogs"].waitForExistence(timeout: 3), "Tabbar did not appear")
+        tabBar.buttons["Dogs"].tap()
+        
+        //
+        // Asserts for DogsViewController
+        //
+        
+        XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast after saving image did not appear")
+        XCTAssertEqual(toast.label, "Image saved succesfully", "Label on the toast should dispaly 'Image saved succesfully'")
+    }
+    
+    func testImageSavingError() {
+        app.terminate()
+        app.launchEnvironment["UITestModeError"] = "true" // Setting environment variable to indicate the test mode for mocking image
+        app.launch()
+    
+        //
+        // Asserts for MainViewController
+        //
+        
+        XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonAnyPhoto.tap()
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        alert.buttons["OK"].tap()
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast did not appear")
+        XCTAssertEqual(toast.label, "Error: No photo available for download", "Label on the toast should dispaly 'Error: No photo available for download'")
+        
+        XCTAssertTrue(tabBar.buttons["Cats"].waitForExistence(timeout: 3), "Tabbar did not appear")
+        tabBar.buttons["Cats"].tap()
+        
+        //
+        // Asserts for CatsViewController
+        //
+        
+        XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonCat.tap()
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        alert.buttons["OK"].tap()
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast did not appear")
+        XCTAssertEqual(toast.label, "Error: No photo available for download", "Label on the toast should dispaly 'Error: No photo available for download'")
+        
+        XCTAssertTrue(tabBar.buttons["Dogs"].waitForExistence(timeout: 3), "Tabbar did not appear")
+        tabBar.buttons["Dogs"].tap()
+        
+        //
+        // Asserts for DogsViewController
+        //
+        
+        XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
+        XCTAssertTrue(buttonSaveImage.exists, "Button for saving image did not appear")
+        XCTAssertEqual(buttonSaveImage.label, "Save Photo", "Label on the button should dispaly 'Save Photo'")
+        buttonDog.tap()
+        XCTAssertTrue(alert.waitForExistence(timeout: 3), "Error alert did not appear")
+        alert.buttons["OK"].tap()
+        buttonSaveImage.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 1), "Toast did not appear")
+        XCTAssertEqual(toast.label, "Error: No photo available for download", "Label on the toast should dispaly 'Error: No photo available for download'")
     }
 }

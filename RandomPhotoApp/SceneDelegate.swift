@@ -39,11 +39,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.makeKeyAndVisible()
         }
         
-        // Check if the app is running in a test environment
-        if ProcessInfo.processInfo.environment["UITestMode"] == "true" {
+        // Check if the app is running in a test environment for error
+        if ProcessInfo.processInfo.environment["UITestModeError"] == "true" {
             let configuration = URLSessionConfiguration.default
             configuration.protocolClasses = [MockURLProtocol.self]
+            let testSession = URLSession(configuration: configuration)
+            
+            // Assigning the session to all controllers
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                for viewController in tabBarController.viewControllers ?? [] {
+                    if let MainVC = viewController as? ViewController {
+                        MainVC.session = testSession
+                    } else if let CatsVC = viewController as? CatsViewController {
+                        CatsVC.session = testSession
+                    } else if let DogsVC = viewController as? DogsViewController {
+                        DogsVC.session = testSession
+                    }
+                }
+                MockURLProtocol.responseData = Data()
+                MockURLProtocol.statusCode = 404
+            }
+            
+        }
+        
+        // Check if the app is running in a test environment for success
+        if ProcessInfo.processInfo.environment["UITestModeSuccess"] == "true" {
+            let configuration = URLSessionConfiguration.default
+            configuration.protocolClasses = [MockURLProtocol.self]
+            
             let session = URLSession(configuration: configuration)
+            let mockImage = UIImage(systemName: "star")!
+            MockURLProtocol.responseData = mockImage.pngData()
+            MockURLProtocol.statusCode = 200
             
             // Assigning the session to all controllers
             if let tabBarController = window?.rootViewController as? UITabBarController {
@@ -56,8 +83,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         DogsVC.session = session
                     }
                 }
-                MockURLProtocol.responseData = Data()
-                MockURLProtocol.statusCode = 404
             }
             
         }

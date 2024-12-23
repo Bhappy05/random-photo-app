@@ -9,7 +9,7 @@ import UIKit
 import Photos
 
 class ViewController: UIViewController {
-    var session: URLSession = URLSession.shared
+    var session: URLSession = .shared
     
     private let label: UILabel = {
         let label = UILabel()
@@ -21,10 +21,10 @@ class ViewController: UIViewController {
         label.accessibilityIdentifier = "RandomPhotoLabelIdentifier"
         
         // Adding shadow to the text for better visibility
-        label.layer.shadowColor = UIColor.black.cgColor // Shadow color
-        label.layer.shadowOffset = CGSize(width: 2, height: 2) // Shadow offset
-        label.layer.shadowOpacity = 0.7 // Shadow opacity
-        label.layer.shadowRadius = 2.0 // Shadow blur radius
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.shadowOpacity = 0.7
+        label.layer.shadowRadius = 2.0
         return label
     }()
     
@@ -47,6 +47,7 @@ class ViewController: UIViewController {
         return button
     }()
     
+    // Button for oppening bottomSheet with info
     private let infoButton: UIButton = {
         let infoButton = UIButton(type: .infoDark)
         infoButton.tintColor = .white
@@ -55,6 +56,7 @@ class ViewController: UIViewController {
         return infoButton
     }()
     
+    // Button to save photo to the library
     private let saveButton: UIButton = {
         let saveButton = UIButton()
         saveButton.backgroundColor = .systemMint
@@ -80,14 +82,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.accessibilityIdentifier = "MainVCIdentifier"
-        colors.shuffle()
+        colors.shuffle() // Mixing colors for background
         view.backgroundColor = colors.randomElement()
         imageView.backgroundColor = view.backgroundColor
         view.addSubview(imageView)
         imageView.frame = CGRect(x: 0, y: 0, width: 380, height: 350)
         imageView.center = view.center
-        getRandomPhoto()
-    
+        
+        if ProcessInfo.processInfo.environment["UITestModeError"] != "true" { // Special condition for test environment to not download the photo if testing errors
+            getRandomPhoto()
+        }
+        
         view.addSubview(label)
         // Setting constraints to position the label in the top-left corner
         NSLayoutConstraint.activate([
@@ -103,8 +108,8 @@ class ViewController: UIViewController {
         saveButton.frame = CGRect(x: 55, y: view.frame.size.height - 150, width: view.frame.size.width - 110, height: 40)
         saveButton.addTarget(self, action: #selector(didTapButtonSavePhoto), for: .touchUpInside)
         
-        view.addSubview(infoButton) // Add the info button to the view
-        // Set constraints to position the button in the top-right corner
+        view.addSubview(infoButton)
+        // Setting constraints to position the button in the top-right corner
         NSLayoutConstraint.activate([
             infoButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 22),
             infoButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
@@ -141,7 +146,7 @@ class ViewController: UIViewController {
         session.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching image: \(error)")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if error
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "\(error)")
@@ -152,7 +157,7 @@ class ViewController: UIViewController {
             // Check if the response status code is not 200
             if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
                 print("Server returned status code: \(httpResponse.statusCode)")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if response code is not 200
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "HTTP Error: \(httpResponse.statusCode)")
@@ -161,7 +166,7 @@ class ViewController: UIViewController {
             }
             guard let data = data else {
                 print("No data returned from the request")
-                // Show an alert on the main thread
+                // Show an alert on the main thread if there is no photo
                 DispatchQueue.main.async {
                     stopLoader()
                     self.showErrorAlert(message: "No data received.")
@@ -182,7 +187,7 @@ class ViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "OK", style: .default))
         alertController.view.accessibilityIdentifier = "ErrorAlertIdentifier"
         
-        // Find the first active UIWindowScene and its window
+        // Finding the first active UIWindowScene and its window to present alert
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first,
            let currentViewController = window.rootViewController {
@@ -192,9 +197,9 @@ class ViewController: UIViewController {
     
     @objc private func showInfoBottomSheet() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let bottomSheetVC = storyboard.instantiateViewController(withIdentifier: "InfoBottomSheetVC")  // Instantiate the view controller from storyboard by storyboardID
+        let bottomSheetVC = storyboard.instantiateViewController(withIdentifier: "InfoBottomSheetVC")  // Instantiates the view controller from storyboard by storyboardID
         
-        bottomSheetVC.view.accessibilityIdentifier = "BottomSheetIdentifier"  // Add accessibility identifier to the view of the bottom sheet
+        bottomSheetVC.view.accessibilityIdentifier = "BottomSheetIdentifier"
         
         let bottomLabel = UILabel()
         bottomLabel.text = "I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners."
@@ -220,10 +225,10 @@ class ViewController: UIViewController {
         if let sheetPresentation = bottomSheetVC.sheetPresentationController { // Configuring the bottom sheet
             sheetPresentation.detents = [
                 .custom { context in
-                    return context.maximumDetentValue * 0.3 // Set to 30% of the screen height
+                    return context.maximumDetentValue * 0.3 // Sets to 30% of the screen height
                 }
             ]
-            present(bottomSheetVC, animated: true, completion: nil) // Present the bottom sheet
+            present(bottomSheetVC, animated: true, completion: nil) // Presents the bottom sheet
         }
     }
     
@@ -240,7 +245,7 @@ class ViewController: UIViewController {
         } else {
             // Image saved successfully
             DispatchQueue.main.async {
-                self.showToast(message: "Image saved succesfully", duration: 1)
+                self.showToast(message: "Image saved succesfully", duration: 1.5)
             }
             print("Image saved successfully!")
         }
@@ -293,6 +298,7 @@ class ViewController: UIViewController {
     func showToast(message: String, duration: Double = 2.0) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         alert.view.accessibilityIdentifier = "ToastIdentifier"
+        alert.view.accessibilityLabel = message
         self.present(alert, animated: true)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
