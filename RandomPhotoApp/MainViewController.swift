@@ -40,15 +40,27 @@ class ViewController: UIViewController {
     // Button for new photo
     private let button: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemPink
         button.setTitle("New Random Photo", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         button.setTitleColor(.black, for: .normal)
         button.accessibilityIdentifier = "RandomPhotoButtonIdentifier"
+        
+        // Gradient color
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.systemPink.cgColor,
+            UIColor.systemOrange.cgColor,
+            UIColor.systemYellow.cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 310, height: 40)
+        button.layer.insertSublayer(gradientLayer, at: 0)
         
         // Rounding corners
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
-          
+        
         // Dimming when pressed
         button.configureWithTouchEffects()
         
@@ -67,10 +79,22 @@ class ViewController: UIViewController {
     // Button to save photo to the library
     private let saveButton: UIButton = {
         let saveButton = UIButton()
-        saveButton.backgroundColor = .systemMint
         saveButton.setTitle("Save Photo", for: .normal)
+        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.accessibilityIdentifier = "SaveButtonIdentifier"
+        
+        // Gradient color
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor.systemIndigo.cgColor,
+            UIColor.systemTeal.cgColor,
+            UIColor.systemMint.cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 310, height: 40)
+        saveButton.layer.insertSublayer(gradientLayer, at: 0)
         
         // Rounding corners
         saveButton.layer.cornerRadius = 15
