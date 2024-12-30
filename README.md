@@ -10,48 +10,45 @@ Below is the list of features I've planned to add to the project
 
 - [x] 3 screens for different images (Any image, Cats and Dogs)
 - [x] Asynchronous image fetching
-- [x] Unit Tests
-- [x] UI Tests
 - [x] Bottom sheet with info
 - [x] Deep Links
-- [x] Error handling
+- [x] Error handling with alerts
 - [x] Loaders
 - [x] Image download function
 - [x] Toasts with info
+- [x] Unit Tests
+- [x] UI Tests
 - [ ] GitHub CI integration
 
 ## Screenshots and video
 ### Launch Screen
-![LaunchScreen](https://github.com/user-attachments/assets/b1406302-b2ff-432f-b53b-5f03752f0d8d)
+![Launch_screen](https://github.com/user-attachments/assets/0194597a-a734-4698-b235-639787a72dfb)
 
 ### Main View Controller
-![MainVC](https://github.com/user-attachments/assets/5293b0f1-5579-483d-be13-0875e284799c)
+![MainVC](https://github.com/user-attachments/assets/8567e5b1-feff-4e62-a6b8-87550c777a7b)
 
 ### Cats View Controller
-![CatsVC](https://github.com/user-attachments/assets/ad80eafc-b263-4388-921a-445ba772b2a3)
+![CatsVC](https://github.com/user-attachments/assets/aee4a8ca-5779-47b6-b3b0-a24d6cd5b379)
 
 ### Dogs View Controller
-![DogsVC](https://github.com/user-attachments/assets/b20cbf4a-ab5d-4d3a-8571-47ca326a04f7)
+![DogsVC](https://github.com/user-attachments/assets/ce3f7cbe-8fda-4c3b-803d-cb6393103924)
 
 ### Bottom Sheet with info
-![BottomSheet](https://github.com/user-attachments/assets/4496a406-ed91-4b4d-a965-dad89df47007)
+![Bottom_sheet](https://github.com/user-attachments/assets/6a440426-9027-4973-8128-39823d71db77)
 
 ### Loaders 
-https://github.com/user-attachments/assets/aede05ec-c1e8-4fdc-8fd3-5853db433597
+https://github.com/user-attachments/assets/d47d5e2c-2a23-460e-88a8-c66cf7e2b50e
 
 ### Error handling with alert
-![ErrorAlert](https://github.com/user-attachments/assets/6c10ee0b-dd01-4c28-8a1d-9139eeee9741)
+![Alert](https://github.com/user-attachments/assets/7b250e70-137d-4957-b3f4-083402b70f5c)
 
 ### Toasts
-![ToastSuccess](https://github.com/user-attachments/assets/4b1608c1-dcc3-4e2a-b044-79019e64e005)
+![Toast2](https://github.com/user-attachments/assets/5f9750b0-5591-4ef8-9c2a-ba24df451339)
 
-![ToastWithError1](https://github.com/user-attachments/assets/705fd529-8078-46f9-9d7a-33b0e7dab53b)
-
-![ToastWithError2](https://github.com/user-attachments/assets/0bb7cf90-cfb0-4263-834f-d01d916b1f15)
+![Toast1](https://github.com/user-attachments/assets/51d322c2-f079-466b-847e-8c785efaf95f)
 
 ### Permissions for photo library and photo saving
-https://github.com/user-attachments/assets/a136291e-4806-42a9-907d-867895ae354d
-
+https://github.com/user-attachments/assets/4638c270-4daf-496d-8433-be0f3b8677a4
 
 ### UI tests
 ![UITestsNavigator](https://github.com/user-attachments/assets/df9a7833-6ecc-4bd3-92d0-530391580208)
@@ -60,7 +57,9 @@ https://github.com/user-attachments/assets/a136291e-4806-42a9-907d-867895ae354d
 ![UnitTestsNavigator](https://github.com/user-attachments/assets/91928ff1-6757-4e30-8cc5-53bfbb9ccac8)
 
 ### DeepLink
-https://github.com/user-attachments/assets/c13fa4aa-9b82-4495-bdbd-df40f51e3bd1
+https://github.com/user-attachments/assets/6a82e9f4-5b81-4b5e-8d7c-a728ef83b232
+
+
 
 
 
