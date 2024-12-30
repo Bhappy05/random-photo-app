@@ -10,19 +10,21 @@ import Photos
 
 class ViewController: UIViewController {
     var session: URLSession = .shared
+    private let buttonGradientLayer = CAGradientLayer()
+    private let saveButtonGradientLayer = CAGradientLayer()
     
     private let label: UILabel = {
         let label = UILabel()
         label.text = "Random Photo"
         label.textColor = .systemMint
-        label.font = UIFont.systemFont(ofSize: 30, weight: .semibold)
+        label.font = UIFont(name: "AvenirNext-Bold", size: 30)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         label.accessibilityIdentifier = "RandomPhotoLabelIdentifier"
         
         // Adding shadow to the text for better visibility
         label.layer.shadowColor = UIColor.black.cgColor
-        label.layer.shadowOffset = CGSize(width: 2, height: 2)
+        label.layer.shadowOffset = CGSize(width: 3, height: 3)
         label.layer.shadowOpacity = 0.7
         label.layer.shadowRadius = 2.0
         return label
@@ -34,28 +36,24 @@ class ViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .white
         imageView.accessibilityIdentifier = "MainImageViewIdentifier"
+        
+        // Borders for imageView
+        imageView.layer.borderWidth = 4
+        imageView.layer.borderColor = UIColor.systemMint.cgColor
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        
         return imageView
     }()
     
     // Button for new photo
     private let button: UIButton = {
         let button = UIButton()
-        button.setTitle("New Random Photo", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        button.setTitle("New Photo", for: .normal)
+        button.titleLabel?.font = UIFont(name: "Georgia", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.accessibilityIdentifier = "RandomPhotoButtonIdentifier"
-        
-        // Gradient color
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
-            UIColor.systemPink.cgColor,
-            UIColor.systemOrange.cgColor,
-            UIColor.systemYellow.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 310, height: 40)
-        button.layer.insertSublayer(gradientLayer, at: 0)
+        button.backgroundColor = .systemMint
         
         // Rounding corners
         button.layer.cornerRadius = 15
@@ -80,21 +78,10 @@ class ViewController: UIViewController {
     private let saveButton: UIButton = {
         let saveButton = UIButton()
         saveButton.setTitle("Save Photo", for: .normal)
-        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        saveButton.titleLabel?.font = UIFont(name: "Georgia", size: 20)
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.accessibilityIdentifier = "SaveButtonIdentifier"
-        
-        // Gradient color
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
-            UIColor.systemIndigo.cgColor,
-            UIColor.systemTeal.cgColor,
-            UIColor.systemMint.cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 310, height: 40)
-        saveButton.layer.insertSublayer(gradientLayer, at: 0)
+        saveButton.backgroundColor = .systemMint
         
         // Rounding corners
         saveButton.layer.cornerRadius = 15
@@ -126,8 +113,9 @@ class ViewController: UIViewController {
         view.backgroundColor = colors.randomElement()
         imageView.backgroundColor = view.backgroundColor
         view.addSubview(imageView)
-        imageView.frame = CGRect(x: 0, y: 0, width: 380, height: 350)
-        imageView.center = view.center
+        imageView.frame = CGRect(x: 0, y: 0, width: 370, height: 430)
+        imageView.center.x = view.center.x
+        imageView.center.y = view.center.y - 50
         
         if ProcessInfo.processInfo.environment["UITestModeError"] != "true" { // Special condition for test environment to not download the photo if testing errors
             getRandomPhoto()
@@ -137,15 +125,49 @@ class ViewController: UIViewController {
         // Setting constraints to position the label in the top-left corner
         NSLayoutConstraint.activate([
             label.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16)
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         view.addSubview(button)
-        button.frame = CGRect(x: 55, y: view.frame.size.height - 210, width: view.frame.size.width - 110, height: 40)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+            button.widthAnchor.constraint(equalToConstant: view.frame.size.width - 170),
+            button.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        
+        // Gradient color for 'New photo' button
+        buttonGradientLayer.colors = [
+            UIColor.systemPink.cgColor,
+            UIColor.systemOrange.cgColor,
+            UIColor.systemYellow.cgColor
+        ]
+        buttonGradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
+        buttonGradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        button.layer.insertSublayer(buttonGradientLayer, at: 0)
+        
         button.addTarget(self, action: #selector(didTapButtonPhoto), for: .touchUpInside)
         
         view.addSubview(saveButton)
-        saveButton.frame = CGRect(x: 55, y: view.frame.size.height - 150, width: view.frame.size.width - 110, height: 40)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            saveButton.widthAnchor.constraint(equalToConstant: view.frame.size.width - 170),
+            saveButton.heightAnchor.constraint(equalToConstant: 35)
+        ])
+        
+        // Gradient color for save button
+        saveButtonGradientLayer.colors = [
+            UIColor.systemIndigo.cgColor,
+            UIColor.systemTeal.cgColor,
+            UIColor.systemMint.cgColor
+        ]
+        saveButtonGradientLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
+        saveButtonGradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        saveButton.layer.insertSublayer(saveButtonGradientLayer, at: 0)
+        
         saveButton.addTarget(self, action: #selector(didTapButtonSavePhoto), for: .touchUpInside)
         
         view.addSubview(infoButton)
@@ -155,11 +177,24 @@ class ViewController: UIViewController {
             infoButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
         infoButton.addTarget(self, action: #selector(showInfoBottomSheet), for: .touchUpInside)
+        
+        // Settings for UITabBar
+        let appearance = UITabBarItem.appearance()
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont(name: "Georgia", size: 14)!
+        ]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupLoader(in: imageView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        buttonGradientLayer.frame = button.bounds
+        saveButtonGradientLayer.frame = saveButton.bounds
     }
     
     // Function to handle the tap on button and change the background color
@@ -244,7 +279,7 @@ class ViewController: UIViewController {
         let bottomLabel = UILabel()
         bottomLabel.text = "I do not own the rights for any of these images. They are all taken from open sources. All credits go to the rightful owners."
         bottomLabel.textColor = .black
-        bottomLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        bottomLabel.font = UIFont(name: "Georgia", size: 22)
         bottomLabel.textAlignment = .center
         bottomLabel.numberOfLines = 0
         bottomLabel.lineBreakMode = .byWordWrapping
