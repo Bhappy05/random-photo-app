@@ -51,10 +51,10 @@ https://github.com/user-attachments/assets/d47d5e2c-2a23-460e-88a8-c66cf7e2b50e
 https://github.com/user-attachments/assets/4638c270-4daf-496d-8433-be0f3b8677a4
 
 ### UI tests
-![UITestsNavigator](https://github.com/user-attachments/assets/df9a7833-6ecc-4bd3-92d0-530391580208)
+![image](https://github.com/user-attachments/assets/1541eeb8-40c4-4db4-91b5-7062ab35b318)
 
 ### Unit tests
-![UnitTestsNavigator](https://github.com/user-attachments/assets/91928ff1-6757-4e30-8cc5-53bfbb9ccac8)
+![image](https://github.com/user-attachments/assets/b1426ff1-64c8-4e18-87ab-013941606a18)
 
 ### DeepLink
 https://github.com/user-attachments/assets/6a82e9f4-5b81-4b5e-8d7c-a728ef83b232
