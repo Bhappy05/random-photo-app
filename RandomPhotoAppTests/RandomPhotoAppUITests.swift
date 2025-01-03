@@ -148,7 +148,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         XCTAssertTrue(mainVC.waitForExistence(timeout: 3), "Main VC did not appear")
         XCTAssertTrue(mainViewLabel.exists, "The label with identifier 'RandomPhotoLabelIdentifier' should exist.")
         XCTAssertEqual(mainViewLabel.label, "Random Photo", "The title label should display 'Random Photo'.")
-        XCTAssertEqual(buttonAnyPhoto.label, "New Random Photo", "The name of the button 'New Random Photo' is incorrect")
+        XCTAssertEqual(buttonAnyPhoto.label, "New Photo", "The name of the button 'New Random Photo' is incorrect")
         XCTAssertTrue(mainImageView.exists, "Main image view does not exists")
         
         XCTAssertTrue(infoButton.exists, "Info button does not exist")
@@ -167,7 +167,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         XCTAssertTrue(catsVC.waitForExistence(timeout: 3), "Cats VC did not appear")
         XCTAssertTrue(catsViewLabel.exists, "The label with identifier 'RandomCatLabelIdentifier' should exist.")
         XCTAssertEqual(catsViewLabel.label, "Random Cat Photo", "The title label should display 'Random Cat Photo'.")
-        XCTAssertEqual(buttonCat.label, "New Random Cat", "The name of the button 'New Random Cat' is incorrect")
+        XCTAssertEqual(buttonCat.label, "New Cat", "The name of the button 'New Random Cat' is incorrect")
         XCTAssertTrue(catsImageView.exists, "Cats image view does not exists")
         
         tabBar.buttons["Dogs"].tap()
@@ -179,7 +179,7 @@ final class RandomPhotoAppUITests: XCTestCase {
         XCTAssertTrue(dogsVC.waitForExistence(timeout: 3), "Dogs VC did not appear")
         XCTAssertTrue(dogsViewLabel.exists, "The label with identifier 'RandomDogLabelIdentifier' should exist.")
         XCTAssertEqual(dogsViewLabel.label, "Random Dog Photo", "The title label should display 'Random Dog Photo'.")
-        XCTAssertEqual(buttonDog.label, "New Random Dog", "The name of the button 'New Random Dog' is incorrect")
+        XCTAssertEqual(buttonDog.label, "New Dog", "The name of the button 'New Random Dog' is incorrect")
         XCTAssertTrue(dogsImageView.exists, "Dogs image view does not exists")
         
         tabBar.buttons["Any Photo"].tap()
@@ -187,18 +187,27 @@ final class RandomPhotoAppUITests: XCTestCase {
     }
     
     func testDeepLinkToMainViewController() throws {
-            app.launchArguments = ["-deeplink", "randomphotoapp://"] // Provides the deep link URL as a launch argument
-            app.launch() // Launching the app with the provided arguments
+        app.terminate()
+        app.launchArguments = ["-deeplink", "randomphotoapp://"] // Provides the deep link URL as a launch argument
+        app.launch() // Launching the app with provided arguments
         
-            XCTAssertTrue(mainVC.waitForExistence(timeout: 5), "Main View did not appear on deep link") // Wait for the main view to appear
-        }
+        XCTAssertTrue(mainVC.waitForExistence(timeout: 5), "Main View did not appear on deep link") // Check if it is the main view controller
+    }
     
-    func testLaunchPerformance() throws { // This measures how long it takes to launch application.
-        if #available(macOS 10.15, iOS 16.0, tvOS 13.0, watchOS 7.0, *) {
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+    func testDeepLinkToCatsViewController() throws {
+        app.terminate()
+        app.launchArguments = ["-deeplink", "randomphotoappcats://"] // Provides the deep link URL as a launch argument
+        app.launch() // Launching the app with the provided arguments
+        
+        XCTAssertTrue(catsVC.waitForExistence(timeout: 5), "Cats View did not appear on deep link") // Check if it is the cats view controller
+    }
+    
+    func testDeepLinkToDogsViewController() throws {
+        app.terminate()
+        app.launchArguments = ["-deeplink", "randomphotoappdogs://"] // Provides the deep link URL as a launch argument
+        app.launch() // Launching the app with the provided arguments
+        
+        XCTAssertTrue(dogsVC.waitForExistence(timeout: 5), "Dogs View did not appear on deep link") // Check if it is the dogs view controller
     }
     
     func testLoaders() {

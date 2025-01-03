@@ -146,7 +146,7 @@ class CatsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupLoader(in: imageView) // Start the loader whenever the view appears
+        setupLoader(in: imageView) // Setup the loader whenever the view appears
     }
     
     override func viewDidLayoutSubviews() {

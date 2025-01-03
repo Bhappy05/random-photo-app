@@ -11,21 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-            return
-        }
-        
-        if url.scheme == "randomphotoapp" {
-            // Check if rootViewController is UITabBarController
-            if let tabBarController = window?.rootViewController as? UITabBarController {
-                // If its one of other screens then go to the MainVC
-                if !(tabBarController.selectedViewController is ViewController) {
-                    tabBarController.selectedIndex = 0 // index of the MainViewController
-                }
-            }
-        }
+        // Handling deeplink when the app is already running
+        guard let url = URLContexts.first?.url else { return }
+        handleDeeplink(url: url)
     }
     
     func scene(_ scene: UIScene,  willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -85,6 +74,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
             
+        }
+        
+        // Handling deeplink if the app is being launched via a URL
+        if let url = connectionOptions.urlContexts.first?.url {
+            handleDeeplink(url: url)
+        }
+        
+        // Handling deeplink if the app is being launched via UI tests with launch arguments
+        if CommandLine.arguments.contains("-deeplink") {
+            if let index = CommandLine.arguments.firstIndex(of: "-deeplink"), CommandLine.arguments.count > index + 1 {
+                let deepLinkURLString = CommandLine.arguments[index + 1]
+                if let url = URL(string: deepLinkURLString) {
+                    handleDeeplink(url: url)
+                }
+            }
+        }
+    }
+    
+    // Function to handle all app deeplinks
+    private func handleDeeplink(url: URL) {
+        if url.scheme == "randomphotoapp" {
+            // Check if rootViewController is UITabBarController
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                // If its one of other screens then go to the MainVC
+                if !(tabBarController.selectedViewController is ViewController) {
+                    tabBarController.selectedIndex = 0 // index of the MainViewController
+                }
+            }
+        }
+        
+        if url.scheme == "randomphotoappcats" {
+            // Check if rootViewController is UITabBarController
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                // If its one of other screens then go to the CatsVC
+                if !(tabBarController.selectedViewController is CatsViewController) {
+                    tabBarController.selectedIndex = 1 // index of the CatsViewController
+                }
+            }
+        }
+        
+        if url.scheme == "randomphotoappdogs" {
+            // Check if rootViewController is UITabBarController
+            if let tabBarController = window?.rootViewController as? UITabBarController {
+                // If its one of other screens then go to the DogsVC
+                if !(tabBarController.selectedViewController is DogsViewController) {
+                    tabBarController.selectedIndex = 2 // index of the DogsViewController
+                }
+            }
         }
     }
 
