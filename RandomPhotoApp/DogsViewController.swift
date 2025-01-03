@@ -88,10 +88,16 @@ class DogsViewController: UIViewController {
         super.viewDidLoad()
         view.accessibilityIdentifier = "DogsVCIdentifier"
         view.backgroundColor = .systemMint
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-        imageView.frame = CGRect(x: 0, y: 0, width: 370, height: 430)
-        imageView.center.x = view.center.x
-        imageView.center.y = view.center.y - 50
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.93), // 93% of the parent view's width
+            imageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.57), // 57% of the parent view's height
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20)
+        ])
+        
         getRandomDog()
         
         view.addSubview(label)
