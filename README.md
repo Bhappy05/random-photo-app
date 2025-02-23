@@ -18,7 +18,7 @@ Below is the list of features I've planned to add to the project
 - [x] Toasts with info
 - [x] Unit Tests
 - [x] UI Tests
-- [ ] GitHub CI integration
+- [x] GitHub CI integration
 
 ## Screenshots and video
 ### Launch Screen
@@ -51,13 +51,15 @@ https://github.com/user-attachments/assets/d47d5e2c-2a23-460e-88a8-c66cf7e2b50e
 https://github.com/user-attachments/assets/4638c270-4daf-496d-8433-be0f3b8677a4
 
 ### UI tests
-![image](https://github.com/user-attachments/assets/1541eeb8-40c4-4db4-91b5-7062ab35b318)
+![image](https://github.com/user-attachments/assets/bbea0ee3-53d5-40b6-88ed-aa28e7fcbb2f)
 
 ### Unit tests
 ![image](https://github.com/user-attachments/assets/b1426ff1-64c8-4e18-87ab-013941606a18)
 
 ### DeepLink
-https://github.com/user-attachments/assets/6a82e9f4-5b81-4b5e-8d7c-a728ef83b232
+https://github.com/user-attachments/assets/3df1ae22-8e85-4458-a335-0a94e8c68c2b
+
+
 
 
 
