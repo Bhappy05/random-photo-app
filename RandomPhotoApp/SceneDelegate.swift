@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene,  willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        window?.rootViewController = nil  // Deleting old rootViewController
+        window = nil  // Free the memory for `UIWindow`
         window = UIWindow(windowScene: windowScene)
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -30,50 +32,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Check if the app is running in a test environment for error
         if ProcessInfo.processInfo.environment["UITestModeError"] == "true" {
-            let configuration = URLSessionConfiguration.default
-            configuration.protocolClasses = [MockURLProtocol.self]
-            let testSession = URLSession(configuration: configuration)
-            
-            // Assigning the session to all controllers
-            if let tabBarController = window?.rootViewController as? UITabBarController {
-                for viewController in tabBarController.viewControllers ?? [] {
-                    if let MainVC = viewController as? ViewController {
-                        MainVC.session = testSession
-                    } else if let CatsVC = viewController as? CatsViewController {
-                        CatsVC.session = testSession
-                    } else if let DogsVC = viewController as? DogsViewController {
-                        DogsVC.session = testSession
-                    }
-                }
-                MockURLProtocol.responseData = Data()
-                MockURLProtocol.statusCode = 404
-            }
-            
+            setupMockSession(isSuccess: false)
         }
         
         // Check if the app is running in a test environment for success
         if ProcessInfo.processInfo.environment["UITestModeSuccess"] == "true" {
-            let configuration = URLSessionConfiguration.default
-            configuration.protocolClasses = [MockURLProtocol.self]
-            
-            let session = URLSession(configuration: configuration)
-            let mockImage = UIImage(systemName: "star")!
-            MockURLProtocol.responseData = mockImage.pngData()
-            MockURLProtocol.statusCode = 200
-            
-            // Assigning the session to all controllers
-            if let tabBarController = window?.rootViewController as? UITabBarController {
-                for viewController in tabBarController.viewControllers ?? [] {
-                    if let MainVC = viewController as? ViewController {
-                        MainVC.session = session
-                    } else if let CatsVC = viewController as? CatsViewController {
-                        CatsVC.session = session
-                    } else if let DogsVC = viewController as? DogsViewController {
-                        DogsVC.session = session
-                    }
-                }
-            }
-            
+            setupMockSession(isSuccess: true)
         }
         
         // Handling deeplink if the app is being launched via a URL
@@ -120,6 +84,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // If its one of other screens then go to the DogsVC
                 if !(tabBarController.selectedViewController is DogsViewController) {
                     tabBarController.selectedIndex = 2 // index of the DogsViewController
+                }
+            }
+        }
+    }
+    
+    private func setupMockSession(isSuccess: Bool) {
+        let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [MockURLProtocol.self]
+        let session = URLSession(configuration: configuration)
+        
+        if isSuccess {
+            let mockImage = UIImage(systemName: "star")!
+            MockURLProtocol.responseData = mockImage.pngData()
+            MockURLProtocol.statusCode = 200
+        } else {
+            MockURLProtocol.responseData = Data()
+            MockURLProtocol.statusCode = 404
+        }
+        
+        if let tabBarController = window?.rootViewController as? UITabBarController {
+            for viewController in tabBarController.viewControllers ?? [] {
+                if let MainVC = viewController as? ViewController {
+                    MainVC.session.invalidateAndCancel()
+                    MainVC.session = session
+                } else if let CatsVC = viewController as? CatsViewController {
+                    CatsVC.session.invalidateAndCancel()
+                    CatsVC.session = session
+                } else if let DogsVC = viewController as? DogsViewController {
+                    DogsVC.session.invalidateAndCancel()
+                    DogsVC.session = session
                 }
             }
         }

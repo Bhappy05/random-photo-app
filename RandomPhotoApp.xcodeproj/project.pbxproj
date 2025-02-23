@@ -12,6 +12,9 @@
 		3A226A9E2CBED4810071146B /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A226A9B2CBED4810071146B /* ImageLoader.swift */; };
 		3A2D527F2C88C91D00210ADC /* DogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D527E2C88C91D00210ADC /* DogsViewController.swift */; };
 		3A2D52812C88CA1D00210ADC /* CatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2D52802C88CA1D00210ADC /* CatsViewController.swift */; };
+		3A35E2DC2D67A23200F7CE89 /* MainPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A35E2DA2D67A23200F7CE89 /* MainPage.swift */; };
+		3A35E2DF2D6B7C8800F7CE89 /* CatsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A35E2DD2D6B7C8800F7CE89 /* CatsPage.swift */; };
+		3A35E2E12D6B7FC800F7CE89 /* DogsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A35E2E02D6B7FC800F7CE89 /* DogsPage.swift */; };
 		3A437F282CAB44E80075C1BF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AA17EE52C7B5C2A00E9D825 /* Main.storyboard */; };
 		3A5415B42CBE66EF00EAF08F /* RandomPhotoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA17F002C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift */; };
 		3AA17EE02C7B5C2900E9D825 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AA17EDF2C7B5C2900E9D825 /* AppDelegate.swift */; };
@@ -50,6 +53,9 @@
 		3A226A9B2CBED4810071146B /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		3A2D527E2C88C91D00210ADC /* DogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsViewController.swift; sourceTree = "<group>"; };
 		3A2D52802C88CA1D00210ADC /* CatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsViewController.swift; sourceTree = "<group>"; };
+		3A35E2DA2D67A23200F7CE89 /* MainPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPage.swift; sourceTree = "<group>"; };
+		3A35E2DD2D6B7C8800F7CE89 /* CatsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatsPage.swift; sourceTree = "<group>"; };
+		3A35E2E02D6B7FC800F7CE89 /* DogsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogsPage.swift; sourceTree = "<group>"; };
 		3A5415B22CBE623F00EAF08F /* Test Plan Unit Tests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Test Plan Unit Tests.xctestplan"; sourceTree = "<group>"; };
 		3A5415B32CBE625600EAF08F /* Test Plan UI Tests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Test Plan UI Tests.xctestplan"; sourceTree = "<group>"; };
 		3A68BF042D15BACA000B6341 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -148,10 +154,13 @@
 		3AA17EF52C7B5C2D00E9D825 /* RandomPhotoAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				3A35E2DA2D67A23200F7CE89 /* MainPage.swift */,
 				3AA17EF62C7B5C2D00E9D825 /* RandomPhotoAppUnitTests.swift */,
 				3A5415B22CBE623F00EAF08F /* Test Plan Unit Tests.xctestplan */,
 				3AA17F002C7B5C2D00E9D825 /* RandomPhotoAppUITests.swift */,
 				3A5415B32CBE625600EAF08F /* Test Plan UI Tests.xctestplan */,
+				3A35E2DD2D6B7C8800F7CE89 /* CatsPage.swift */,
+				3A35E2E02D6B7FC800F7CE89 /* DogsPage.swift */,
 			);
 			path = RandomPhotoAppTests;
 			sourceTree = "<group>";
@@ -326,8 +335,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AF5C3C32CB6956700FE6AF6 /* MockURLProtocol.swift in Sources */,
+				3A35E2E12D6B7FC800F7CE89 /* DogsPage.swift in Sources */,
 				3A5415B42CBE66EF00EAF08F /* RandomPhotoAppUITests.swift in Sources */,
 				3A226A9E2CBED4810071146B /* ImageLoader.swift in Sources */,
+				3A35E2DC2D67A23200F7CE89 /* MainPage.swift in Sources */,
+				3A35E2DF2D6B7C8800F7CE89 /* CatsPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
