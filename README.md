@@ -19,6 +19,7 @@ Below is the list of features I've planned to add to the project
 - [x] Unit Tests
 - [x] UI Tests
 - [x] GitHub CI integration
+- [x] Page Objects 
 
 ## Screenshots and video
 ### Launch Screen
